@@ -66,11 +66,67 @@ function cadastrarDespesa(){
 	if(despesa.ValidarDAdos()){
 		bd.gravar(despesa)
 		//dialog de sucesso
-		$('#sucessogravacao').modal('show')
+		mostrarModal(true)
 	}else {
 		//dialog de erro
-		$('#errogravacao').modal('show')
+		mostrarModal(false)
 	}
+}
+
+function mostrarModal(tipo){
+
+	let htmlmodal = ''
+	
+	htmlmodal += '<div class="modal-dialog" role="document">'
+    htmlmodal += '    <div class="modal-content">'
+    htmlmodal += '      <div class="modal-header '
+    
+    if(tipo){
+    	htmlmodal += 'text-success">'
+    }else{	
+    	htmlmodal += 'text-danger">'
+    }
+
+    htmlmodal += '        <h5 class="modal-title" id="exampleModalLabel">'
+    
+    if(tipo){
+    	htmlmodal += 'Registro Inserido com Sucesso</h5>'
+    }else{
+    	htmlmodal += 'Erro na Gravação</h5>'	
+    }    
+    
+    htmlmodal += '        <button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+    htmlmodal += '          <span aria-hidden="true">&times;</span>'
+    htmlmodal += '        </button>'
+    htmlmodal += '      </div>'
+    htmlmodal += '      <div class="modal-body">'
+    
+    if(tipo){
+		htmlmodal += '        Despesa Cadastrada com Sucesso'
+	}else{
+		htmlmodal += '        Existem Campos Obrigatórios Que não Foram Preenchidos'
+	}
+    
+    
+    htmlmodal += '      </div>'
+    htmlmodal += '      <div class="modal-footer">'
+    htmlmodal += '        <button type="button" class="btn '
+    
+    if(tipo){
+    	htmlmodal +=  'btn-success" '
+    }else{	
+    	htmlmodal +=  'btn-danger" '
+	}
+    
+    htmlmodal += 'data-dismiss="modal">OK</button>'
+    htmlmodal += '      </div>'
+    htmlmodal += '    </div>'
+    htmlmodal += '  </div>'
+
+   
+    document.getElementById("modalRegistroDespesa").innerHTML = htmlmodal
+    $('#modalRegistroDespesa').modal('show')
+
 }
 
 
