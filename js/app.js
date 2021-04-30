@@ -55,7 +55,39 @@ class Bd{
 			}
 		}
 		return despesas
+	}
 
+
+	pesquisar(despesa){
+		let despesasFiltradas = Array()
+		despesasFiltradas = this.recuperarTodosRegistros()
+
+		if (despesa.ano != ''){
+			despesasFiltradas = despesasFiltradas.filter( d => d.ano == despesa.ano)
+		}	
+
+		if (despesa.mes != ''){
+			despesasFiltradas = despesasFiltradas.filter( d => d.mes == despesa.mes)
+		}
+		
+		if (despesa.dia != ''){
+			despesasFiltradas = despesasFiltradas.filter( d => d.dia == despesa.dia)
+		}
+
+		if (despesa.tipo != ''){
+			despesasFiltradas = despesasFiltradas.filter( d => d.tipo == despesa.tipo)
+		}
+
+		if (despesa.descricao != ''){
+			despesasFiltradas = despesasFiltradas.filter( d => d.descricao == despesa.descricao)
+		}
+
+		if (despesa.valor != ''){
+			despesasFiltradas = despesasFiltradas.filter( d => d.valor == despesa.valor)
+		}
+
+		console.log(despesa)
+		console.log(despesasFiltradas)
 
 	}
 }
@@ -81,6 +113,13 @@ function cadastrarDespesa(){
 	if(despesa.ValidarDAdos()){
 		bd.gravar(despesa)
 		//dialog de sucesso
+		ano.value = ''
+		mes.value = ''
+		dia.value = ''
+		tipo.value = ''
+		descricao.value = ''
+		valor.value = ''
+
 		mostrarModal(true)
 	}else {
 		//dialog de erro
@@ -175,15 +214,23 @@ function carregaListaDespesas(){
 		linha.insertCell(3).innerHTML = d.valor
 	})
 
-/*
-              <tr>
-                <td>15/04/2020</td>
-                <td>Alimentação</td>
-                <td>Compras do Mes</td>
-                <td>444.76</td>
-              </tr>
+}
 
-*/
+function pesquisarDespesa(){
+	let ano = document.getElementById('ano')
+	let mes = document.getElementById('mes')
+	let dia = document.getElementById('dia')
+	let tipo = document.getElementById('tipo')
+	let descricao = document.getElementById('descricao')
+	let valor = document.getElementById('valor')
 
+	let despesa = new Despesa(ano.value,
+		mes.value,
+		dia.value,
+		tipo.value,
+		descricao.value,
+		valor.value)
+
+	bd.pesquisar(despesa)
 }
 
