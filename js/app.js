@@ -43,6 +43,21 @@ class Bd{
 		localStorage.setItem('id',id)
 		
 	}
+
+	recuperarTodosRegistros(){
+
+		let id = localStorage.getItem('id')
+		let despesas = Array()
+		for (let i = 1; i <= id; i++) {
+			let despesa = JSON.parse(localStorage.getItem(i))
+			if(despesa !== null) {
+				despesas.push(despesa)
+			}
+		}
+		return despesas
+
+
+	}
 }
 
 let bd = new Bd
@@ -129,4 +144,46 @@ function mostrarModal(tipo){
 
 }
 
+function carregaListaDespesas(){
+	let despesas = Array()
+	despesas = bd.recuperarTodosRegistros()
+	let listaDespesas = document.getElementById('listaDespesas')
+
+	despesas.forEach(function(d){
+		let linha = listaDespesas.insertRow()
+		linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}` 
+		switch (d.tipo){
+			case '1': linha.insertCell(1).innerHTML = 'Alimentação'
+					  break
+			case '2': linha.insertCell(1).innerHTML = 'Educação'
+					  break
+			case '3': linha.insertCell(1).innerHTML = 'Lazer'
+					  break
+			case '4': linha.insertCell(1).innerHTML = 'Saude'
+					  break
+			case '5': linha.insertCell(1).innerHTML = 'Transporte'
+					  break					  
+
+		}
+
+
+
+		 
+
+
+		linha.insertCell(2).innerHTML = d.descricao
+		linha.insertCell(3).innerHTML = d.valor
+	})
+
+/*
+              <tr>
+                <td>15/04/2020</td>
+                <td>Alimentação</td>
+                <td>Compras do Mes</td>
+                <td>444.76</td>
+              </tr>
+
+*/
+
+}
 
