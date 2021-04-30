@@ -86,8 +86,7 @@ class Bd{
 			despesasFiltradas = despesasFiltradas.filter( d => d.valor == despesa.valor)
 		}
 
-		console.log(despesa)
-		console.log(despesasFiltradas)
+		return despesasFiltradas
 
 	}
 }
@@ -183,10 +182,14 @@ function mostrarModal(tipo){
 
 }
 
-function carregaListaDespesas(){
-	let despesas = Array()
-	despesas = bd.recuperarTodosRegistros()
+function carregaListaDespesas(despesas = Array(),filtro = false){
+
+	if(despesas.length == 0 && filtro ==false){
+		despesas = bd.recuperarTodosRegistros()
+	}
+
 	let listaDespesas = document.getElementById('listaDespesas')
+	listaDespesas.innerHTML = ''
 
 	despesas.forEach(function(d){
 		let linha = listaDespesas.insertRow()
@@ -204,11 +207,6 @@ function carregaListaDespesas(){
 					  break					  
 
 		}
-
-
-
-		 
-
 
 		linha.insertCell(2).innerHTML = d.descricao
 		linha.insertCell(3).innerHTML = d.valor
@@ -231,6 +229,10 @@ function pesquisarDespesa(){
 		descricao.value,
 		valor.value)
 
-	bd.pesquisar(despesa)
+	let despesas = bd.pesquisar(despesa)
+
+	this.carregaListaDespesas(despesas,true)
+
+
 }
 
