@@ -13,14 +13,15 @@
 
 ## Technologies
   
-  HTML
-  CSS
-  BootStrap
-  Font Aewsome
-
-  Javascript
-  Local Storage
+ - HTML
+ - CSS
+ - BootStrap
+ - Font Aewsome
+ - Javascript
+ - Local Storage
   
 ## Implemented Functionalities
+ 
  - Register a transaction
  - Query Transactions
+ - Delete transactions

@@ -51,6 +51,7 @@ class Bd{
 		for (let i = 1; i <= id; i++) {
 			let despesa = JSON.parse(localStorage.getItem(i))
 			if(despesa !== null) {
+				despesa.id = i
 				despesas.push(despesa)
 			}
 		}
@@ -88,6 +89,10 @@ class Bd{
 
 		return despesasFiltradas
 
+	}
+
+	remover(id){
+		localStorage.removeItem(id)
 	}
 }
 
@@ -192,7 +197,10 @@ function carregaListaDespesas(despesas = Array(),filtro = false){
 	listaDespesas.innerHTML = ''
 
 	despesas.forEach(function(d){
+		
 		let linha = listaDespesas.insertRow()
+		
+		// Mostra o texto da despesa em vez do numero
 		linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}` 
 		switch (d.tipo){
 			case '1': linha.insertCell(1).innerHTML = 'Alimentação'
@@ -210,6 +218,19 @@ function carregaListaDespesas(despesas = Array(),filtro = false){
 
 		linha.insertCell(2).innerHTML = d.descricao
 		linha.insertCell(3).innerHTML = d.valor
+
+		// mostra o X ao lado da despesa que permite
+		// exclusao do registro
+		let btn = document.createElement("button")
+		btn.className = 'btn btn-danger'
+		btn.innerHTML = '<i class="fas fa-times"></i>'
+		btn.id = `id_despesa_${d.id}`
+		btn.onclick = function(){
+			bd.remover(this.id.replace('id_despesa_',''))
+			window.location.reload()
+		}
+		linha.insertCell(4).append(btn)
+
 	})
 
 }
